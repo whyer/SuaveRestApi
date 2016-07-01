@@ -13,10 +13,22 @@ module Db =
   let getPeople () =
     peopleStorage.Values :> seq<Person>
 
-  let create person =
+  let createPerson person =
     let nextId = peopleStorage.Values.Count + 1
     let newPerson = {person with Id = nextId}
     peopleStorage.Add(nextId, newPerson)
     newPerson
   
+  let updatePersonById personId personToUpdate =
+    if peopleStorage.ContainsKey personId then
+      let updatedPerson = {personToUpdate with Id = personId}
+      peopleStorage.[personId] <- updatedPerson
+      Some updatedPerson
+    else
+      None
 
+  let updatePerson personToUpdate =
+    updatePersonById personToUpdate.Id personToUpdate
+
+  let deletePersonById personId =
+    peopleStorage.Remove(personId) |> ignore

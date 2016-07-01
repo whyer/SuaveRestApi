@@ -7,7 +7,9 @@ open Suave.Web
 let main argv = 
     let personWebPart = rest "person" {
       GetAll = Db.getPeople
-      Create = Db.create
+      Create = Db.createPerson
+      Update = Db.updatePerson
+      Delete = Db.deletePersonById
     }
 
     startWebServer defaultConfig personWebPart
