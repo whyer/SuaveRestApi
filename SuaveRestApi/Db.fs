@@ -38,3 +38,6 @@ module Db =
       Some peopleStorage.[personId]
     else
       None
+
+  let doesPersonExists personId =
+    peopleStorage.ContainsKey(personId)
