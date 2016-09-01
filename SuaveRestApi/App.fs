@@ -1,5 +1,6 @@
 ﻿open SuaveRestApi.Rest
 open SuaveRestApi.Db
+open SuaveRestApi.MusicStoreDb
 open Suave
 open Suave.Web
 
@@ -15,5 +16,15 @@ let main argv =
       Exists = Db.doesPersonExists
     }
 
-    startWebServer defaultConfig personWebPart
+    let albumWebPart = rest "album" {
+      GetAll = MusicStoreDb.getAlbums
+      Create = MusicStoreDb.createAlbum
+      Update = MusicStoreDb.updateAlbum
+      UpdateByID = MusicStoreDb.updateAlbumById
+      Delete = MusicStoreDb.deleteAlbum
+      GetById = MusicStoreDb.getAlbumById
+      Exists = MusicStoreDb.isAlbumExists
+    }
+
+    startWebServer defaultConfig (choose [personWebPart; albumWebPart])
     0 
